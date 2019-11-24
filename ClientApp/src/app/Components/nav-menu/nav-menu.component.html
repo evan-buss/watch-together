@@ -1,0 +1,50 @@
+<nav class="flex flex-row flex-no-wrap items-center justify-between bg-gray-800
+  h-16">
+  <div class="flex-shrink md:flex-1 float-left">
+    <a class="rounded px-4 py-2 mx-px md:mx-2 bg-blue-500 hover:bg-blue-400
+      text-white" [routerLink]="['/']">
+      Home
+    </a>
+    <!-- {#if $user.type} -->
+    <a class="rounded px-4 py-2 mx-px md:mx-2 bg-blue-500 hover:bg-blue-400
+        text-white" [routerLink]="['/movie']">
+      Movie
+    </a>
+    <!-- {/if} -->
+    <!-- Only show library page when on movie page -->
+    <!-- {#if $user.type === 'streamer'} -->
+    <a class="rounded px-4 py-2 mx-px md:mx-2 bg-blue-500 hover:bg-blue-400
+        text-white" [routerLink]="['/library']">
+      Library
+    </a>
+    <!-- {/if} -->
+    <!-- on:click={() => notifications.addTimed({ title: count++, message: 'timed notification' }, 4000)}> -->
+    <button (click)="persNotif()" class="rounded mx-2 p-2 shadow-lg bg-blue-300">
+      Temp
+    </button>
+    <!-- on:click={() => notifications.addPersistant({
+          title: count++,
+          message: 'Persistant notification'
+        })}> -->
+    <button (click)="tempNotif()" class="rounded mx-2 p-2 shadow-lg bg-blue-300">
+      Pers
+    </button>
+  </div>
+  <div class="flex-shrink ">
+    <!-- {#if $user.type} -->
+    <!-- on:click={logout} -->
+    <a class="rounded px-4 py-2 mx-px md:mx-2 bg-blue-500 hover:bg-blue-400
+        text-white" href="/">
+      Logout
+    </a>
+    <!-- {/if} -->
+    <!-- Only show library page when on movie page -->
+    <!-- {#if $location === '/movie'} -->
+    <!--  on:click={() => sidebarVisible.update(visible => !visible)} -->
+    <div class="hidden sm:inline rounded py-2 px-3 mx-2 bg-blue-500
+        hover:bg-blue-400 text-white cursor-pointer">
+      <i class="la la-comment-dots"></i>
+    </div>
+    <!-- {/if} -->
+  </div>
+</nav>

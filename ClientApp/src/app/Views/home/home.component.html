@@ -1,0 +1,28 @@
+<div class="h-full flex items-center justify-center">
+
+  <div class="w-full max-w-md rounded-lg m-0">
+    <!-- Tab Bar -->
+    <ul class="w-full flex justify-center cursor-pointer relative z-0">
+      <li [ngClass]="isCreator && 'shadow-lg'" class="flex-grow rounded-lg rounded-b-none">
+        <div (click)="isCreator = true"
+          [ngClass]="isCreator ? 'rounded-t-lg text-gray-900 bg-gray-100' : 'text-gray-500'"
+          class="p-4 font-semibold text-center select-none">
+          Create Video Room
+        </div>
+      </li>
+      <li [ngClass]="!isCreator && 'shadow-lg'" class="flex-grow rounded-lg rounded-b-none">
+        <div (click)="isCreator = false"
+          [ngClass]="!isCreator ? 'rounded-t-lg text-gray-900 bg-gray-100' : 'text-gray-500'"
+          class="p-4 font-semibold text-center select-none">
+          Join Video Room
+        </div>
+      </li>
+    </ul>
+    <!-- Form Content Container -->
+    <div [ngClass]="isCreator ? 'rounded-tl-none' : 'rounded-tr-none'"
+      class="px-8 py-10 bg-gray-100 rounded-lg z-10 relative shadow-lg">
+      <!-- <LoginForm on:create={createRoom} on:join={joinRoom} create={isCreator} /> -->
+      <app-form [create]="isCreator"></app-form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<!-- class="{{!$sidebarVisible && 'hidden'}} -->
+<div class="h-full w-full md:max-w-lg flex flex-col
+  items-center justify-between text-light-grey md:border-l border-gray-400">
+  <div class="message-area h-full w-full overflow-hidden">
+    <!-- bind:this={{div}} -->
+    <ul class="flex flex-col p-2">
+      <!-- {#each messages as message} -->
+      <!-- <Message details={message} /> -->
+      <!-- {/each} -->
+      <app-message *ngFor="let message of chatService.chat$ | async" [message]="message"></app-message>
+    </ul>
+  </div>
+  <div class="p-2 border-t border-gray-400 w-full">
+    <!-- bind:value={message} on:keypress={sendMessage} -->
+    <textarea [(ngModel)]="message" (keypress)="handleKeypress($event)" class="rounded resize-none rounded-lg focus:shadow-md focus:outline-none w-full p-2
+      text-gray-600" rows="3"></textarea>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<!-- {{myMessage ? 'self-end' : 'self-start'}} -->
+<li class="self-start my-1">
+  <!-- {#if !myMessage} -->
+  <div class="{myMessage ? 'text-right' : 'text-left'} text-xs text-gray-600">
+    {{message.username}}
+  </div>
+  <!-- {/if} -->
+  <!-- {{messageStyle}} -->
+  <div class="bg-green-500 rounded-lg text-white break-word px-2 py-1 shadow">
+    {{message.message}}
+  </div>
+</li>

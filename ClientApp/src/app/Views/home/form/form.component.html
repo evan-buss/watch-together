@@ -1,0 +1,41 @@
+<form [formGroup]="loginForm" (submit)="onSubmit()">
+
+  <!-- Username entry -->
+  <div class="mb-4">
+    <label class="block text-gray-500 text-sm mb-2" for="username">
+      Username
+    </label>
+    <input formControlName="username" class="appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-400
+        leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="John Smith" />
+    <p *ngIf="(username.dirty || username.touched) && username.invalid" class="text-red-500 text-xs italic">Please enter
+      a username.</p>
+  </div>
+
+  <!-- IP Address Entry -->
+  <div class="mb-6">
+    <label class="block text-gray-500 text-sm mb-2" for="room_code">
+      Video Server Address
+    </label>
+    <input formControlName="serverAddress" class="appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-400
+         leading-tight focus:outline-none focus:shadow-outline" id="room_code" type="text"
+      placeholder="192.168.1.1:8080" />
+    <p *ngIf="(serverAddress.dirty || serverAddress.touched) && serverAddress.hasError('required')"
+      class="text-red-500 text-xs italic">
+      Server address required...
+    </p>
+    <p *ngIf="(serverAddress.dirty || serverAddress.touched) && serverAddress.hasError('invalidAddress')"
+      class="text-red-500 text-xs italic">
+      Invalid IP Address
+    </p>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="flex items-center justify-center mt-3">
+    <button type="submit"
+      [ngClass]="loginForm.invalid ? 'bg-gray-300 cursor-not-allowed text-gray-200' : 'bg-gray-700 hover:bg-gray-900'"
+      class="focus:outline-none
+        focus:shadow-outline text-white font-bold py-2 px-4 rounded cursor-pointer">
+      {{create ? 'Create Room' : 'Join Room'}}
+    </button>
+  </div>
+</form>
