@@ -13,23 +13,15 @@
         text-white" [routerLink]="['/library']">
       Library
     </a>
-    <button (click)="persNotif()" class="rounded mx-2 p-2 shadow-lg bg-blue-300">
-      Temp
-    </button>
-    <button (click)="tempNotif()" class="rounded mx-2 p-2 shadow-lg bg-blue-300">
-      Pers
-    </button>
   </div>
   <div class="flex-shrink ">
     <a *ngIf="userService.loggedIn" (click)="userService.logout()" class="rounded px-4 py-2 mx-px md:mx-2 bg-blue-500 hover:bg-blue-400
         text-white" href="/">
       Logout
     </a>
-    <!-- Only show library page when on movie page -->
-    <!--  on:click={() => sidebarVisible.update(visible => !visible)} -->
     <div *ngIf="router.url === '/movie'" (click)="chatService.toggleChat()"
-      [ngClass]="chatService.chatVisible ? 'bg-blue-800' : 'bg-blue-500'" class="hidden sm:inline rounded py-2 px-3 mx-2
-        hover:bg-blue-400 text-white cursor-pointer">
+      [ngClass]="!chatService.chatVisible ? 'bg-blue-800' : 'bg-blue-500'" class="hidden sm:inline rounded py-2 px-3 mx-2
+        text-white cursor-pointer">
       <i class="la la-comment-dots"></i>
     </div>
   </div>

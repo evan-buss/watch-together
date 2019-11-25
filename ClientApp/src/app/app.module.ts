@@ -15,11 +15,12 @@ import { NotificationsComponent } from './Component/notifications/notifications.
 import { ChatComponent } from './Component/chat/chat.component';
 import { MessageComponent } from './Component/chat/message/message.component';
 import { AuthGuard } from './Service/auth.guard';
+import { HostGuard } from './Service/host.guard';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'movie', canActivate: [AuthGuard], component: MovieComponent },
-  { path: 'library', canActivate: [AuthGuard], component: LibraryComponent },
+  { path: 'library', canActivate: [AuthGuard, HostGuard], component: LibraryComponent },
   { path: 'fetch-data', component: FetchDataComponent },
 ];
 

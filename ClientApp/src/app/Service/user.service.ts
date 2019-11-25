@@ -43,7 +43,7 @@ export class UserService {
     this.user = {
       username,
       address: server,
-      type: UserType.Host
+      type: UserType.Viewer
     }
     this.saveToStorage();
   }
