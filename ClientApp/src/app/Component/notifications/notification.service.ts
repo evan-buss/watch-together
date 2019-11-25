@@ -30,7 +30,7 @@ export class NotificationService {
  */
 export interface Notification {
   time?: number;
-  title: String;
-  message: String;
-  movie?: Boolean;
+  title: string;
+  message: string;
+  movie?: boolean;
 }

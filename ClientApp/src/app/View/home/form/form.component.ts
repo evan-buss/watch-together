@@ -11,7 +11,7 @@ import { NotificationService } from 'src/app/Component/notifications/notificatio
 })
 export class FormComponent implements OnInit {
 
-  @Input() create: Boolean = false;
+  @Input() create: boolean = false;
 
   loginForm: FormGroup;
 

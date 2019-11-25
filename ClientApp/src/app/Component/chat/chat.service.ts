@@ -12,7 +12,7 @@ export interface ChatMessage {
   providedIn: 'root'
 })
 export class ChatService {
-  chatVisible: Boolean = true;
+  chatVisible: boolean = true;
 
   /** message contains all past messages */
   private messages: ChatMessage[] = [];
