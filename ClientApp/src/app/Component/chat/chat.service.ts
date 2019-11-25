@@ -43,6 +43,6 @@ export class ChatService {
   }
 
   send() {
-    this.connection.send("newMessage", "evan", "test message").then(() => console.log("message sent"))
+    this.connection.send("newMessage", "evan", "test message");
   }
 }

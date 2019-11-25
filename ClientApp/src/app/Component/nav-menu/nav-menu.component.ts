@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NotificationService, Notification } from 'src/app/Components/notifications/notification.service';
+import { NotificationService, Notification } from 'src/app/Component/notifications/notification.service';
 
 @Component({
   selector: 'app-nav-menu',

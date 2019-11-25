@@ -5,15 +5,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './Components/nav-menu/nav-menu.component';
-import { HomeComponent } from './Views/home/home.component';
-import { FetchDataComponent } from './Views/fetch-data/fetch-data.component';
-import { FormComponent } from './Views/home/form/form.component';
-import { MovieComponent } from './Views/movie/movie.component';
-import { LibraryComponent } from './Views/library/library.component';
-import { NotificationsComponent } from './Components/notifications/notifications.component';
-import { ChatComponent } from './Components/chat/chat.component';
-import { MessageComponent } from './Components/chat/message/message.component';
+import { NavMenuComponent } from './Component/nav-menu/nav-menu.component';
+import { HomeComponent } from './View/home/home.component';
+import { FetchDataComponent } from './View/fetch-data/fetch-data.component';
+import { FormComponent } from './View/home/form/form.component';
+import { MovieComponent } from './View/movie/movie.component';
+import { LibraryComponent } from './View/library/library.component';
+import { NotificationsComponent } from './Component/notifications/notifications.component';
+import { ChatComponent } from './Component/chat/chat.component';
+import { MessageComponent } from './Component/chat/message/message.component';
 
 @NgModule({
   declarations: [
