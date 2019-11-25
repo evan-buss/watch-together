@@ -12,6 +12,7 @@ export interface ChatMessage {
   providedIn: 'root'
 })
 export class ChatService {
+  chatVisible: Boolean = true;
 
   /** message contains all past messages */
   private messages: ChatMessage[] = [];
@@ -44,5 +45,10 @@ export class ChatService {
 
   send() {
     this.connection.send("newMessage", "evan", "test message");
+  }
+
+  toggleChat(): void {
+    console.log("toggle chat");
+    this.chatVisible = !this.chatVisible;
   }
 }

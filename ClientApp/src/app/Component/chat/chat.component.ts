@@ -5,7 +5,6 @@ import { tap } from "rxjs/operators";
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styles: []
 })
 export class ChatComponent implements OnInit {
 

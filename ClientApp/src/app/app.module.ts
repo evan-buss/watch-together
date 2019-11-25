@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './Component/nav-menu/nav-menu.component';
@@ -14,6 +14,14 @@ import { LibraryComponent } from './View/library/library.component';
 import { NotificationsComponent } from './Component/notifications/notifications.component';
 import { ChatComponent } from './Component/chat/chat.component';
 import { MessageComponent } from './Component/chat/message/message.component';
+import { AuthGuard } from './Service/auth.guard';
+
+const appRoutes: Routes = [
+  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: 'movie', canActivate: [AuthGuard], component: MovieComponent },
+  { path: 'library', canActivate: [AuthGuard], component: LibraryComponent },
+  { path: 'fetch-data', component: FetchDataComponent },
+];
 
 @NgModule({
   declarations: [
@@ -33,12 +41,7 @@ import { MessageComponent } from './Component/chat/message/message.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'movie', component: MovieComponent },
-      { path: 'library', component: LibraryComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

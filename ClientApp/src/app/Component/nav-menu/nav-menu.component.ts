@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { NotificationService, Notification } from 'src/app/Component/notifications/notification.service';
+import { UserService } from 'src/app/Service/user.service';
+import { Router } from '@angular/router';
+import { EventEmitter } from '@angular/core';
+import { ChatService } from '../chat/chat.service';
 
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
 })
 export class NavMenuComponent {
-  isExpanded = false;
-
-  constructor(private notifications: NotificationService) { }
-
-  collapse() {
-    this.isExpanded = false;
-  }
+  constructor(private notifications: NotificationService,
+    public userService: UserService,
+    public router: Router,
+    public chatService: ChatService) { }
 
   tempNotif(): void {
     this.notifications.addTemporary({
@@ -26,9 +27,5 @@ export class NavMenuComponent {
       title: "Persistant",
       message: "This is the body"
     } as Notification);
-  }
-
-  toggle() {
-    this.isExpanded = !this.isExpanded;
   }
 }
