@@ -6,7 +6,6 @@ using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.WebUtilities;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace watch_together.Streaming
@@ -49,7 +48,7 @@ namespace watch_together.Streaming
 
             foreach (string movie in movies)
             {
-                var info = parseFile(Path.GetFileNameWithoutExtension(movie));
+                var info = ParseFile(Path.GetFileNameWithoutExtension(movie));
                 if (!(info is null))
                 {
                     var query = new Dictionary<string, string>()
@@ -60,9 +59,8 @@ namespace watch_together.Streaming
                     var url = QueryHelpers.AddQueryString("http://localhost:8080/", query);
                     var response = await client.GetAsync(url);
 
-                    using var stream = await response.Content.ReadAsStreamAsync();
-                    var res = await JsonSerializer.DeserializeAsync<QueryData>(stream);
-                    Console.WriteLine(res.ToString());
+                    var res = await response.Content.ReadAsAsync<QueryData>();
+
                     if (res.Total > 0)
                     {
                         details.Add(res.Movies[0]);
@@ -80,7 +78,7 @@ namespace watch_together.Streaming
         /// </summary>
         /// <param name="fileName">Name of the file to be parsed</param>
         /// <returns>A MovieFile containing the parsed data or null if no match (invalid filename)</returns>
-        private static MovieFile parseFile(string fileName)
+        private static MovieFile ParseFile(string fileName)
         {
             if (!titleMatcher.IsMatch(fileName)) { return null; }
             var match = titleMatcher.Match(fileName);
@@ -99,17 +97,16 @@ namespace watch_together.Streaming
         public string Year;
     }
 
-    public class QueryData
+    public struct QueryData
     {
         public int Total { get; set; }
         public MovieDBInfo[] Movies { get; set; }
     }
 
-    public class MovieDBInfo
+    public struct MovieDBInfo
     {
         [JsonPropertyName("id")]
         public int RowID { get; set; }
-        [JsonPropertyName("url")]
         public string URL { get; set; }
         public string Poster { get; set; }
         public string Rating { get; set; }
