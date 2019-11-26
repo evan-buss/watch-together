@@ -11,7 +11,6 @@ export class UserService {
 
   user: UserDetails = null;
 
-
   get loggedIn(): boolean {
     return this.user !== null;
   }
@@ -32,7 +31,7 @@ export class UserService {
 
   setHost(username: string, server: string): void {
     this.user = {
-      username,
+      username: username,
       address: server,
       type: UserType.Host
     }
@@ -41,7 +40,7 @@ export class UserService {
 
   setViewer(username: string, server: string): void {
     this.user = {
-      username,
+      username: username,
       address: server,
       type: UserType.Viewer
     }

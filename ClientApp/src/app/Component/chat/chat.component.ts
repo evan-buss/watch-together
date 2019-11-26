@@ -20,7 +20,7 @@ export class ChatComponent implements OnInit {
     // Intercept the 'Enter' key to send messages
     if (event.keyCode === 13) {
       event.preventDefault();
-      this.chatService.send()
+      this.chatService.send(this.message);
       this.message = "";
     }
   }

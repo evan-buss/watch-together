@@ -1,12 +1,10 @@
-<!-- {{myMessage ? 'self-end' : 'self-start'}} -->
-<li class="self-start my-1">
-  <!-- {#if !myMessage} -->
-  <div class="{myMessage ? 'text-right' : 'text-left'} text-xs text-gray-600">
+<li [ngClass]="sentMessage ? 'self-end' : 'self-start'" class="self-start my-1">
+  <div *ngIf="!sentMessage" [ngClass]="sentMessage ? 'text-right' : 'text-left'" class="text-xs text-gray-600">
+    <i class="las la-crown text-yellow-500"></i>
     {{message.username}}
   </div>
-  <!-- {/if} -->
-  <!-- {{messageStyle}} -->
-  <div class="bg-green-500 rounded-lg text-white break-word px-2 py-1 shadow">
+  <div [ngClass]="sentMessage ? 'bg-blue-400 ml-4' : 'bg-green-400 mr-4'"
+    class="rounded-lg text-white break-word px-2 py-1 shadow">
     {{message.message}}
   </div>
 </li>

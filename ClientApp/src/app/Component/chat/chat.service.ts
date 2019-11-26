@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr";
 import { BehaviorSubject, Observable } from 'rxjs';
+import { UserService } from 'src/app/Service/user.service';
 
+/** ChatMessage holds message information from a user */
 export interface ChatMessage {
   timestamp: Date;
   username: string;
@@ -27,11 +29,11 @@ export class ChatService {
     return this.chat.asObservable();
   }
 
-  constructor() {
+  constructor(private userService: UserService) {
     this.connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
 
-    this.connection.on("messageReceived", (username: string, message: string) => {
-      this.messages.push({ timestamp: new Date(), username, message });
+    this.connection.on("broadcastMessage", (chatMessage: ChatMessage) => {
+      this.messages.push(chatMessage);
       this.chat.next(this.messages);
     });
   }
@@ -43,8 +45,14 @@ export class ChatService {
     }
   }
 
-  send() {
-    this.connection.send("newMessage", "evan", "test message");
+  send(message: string) {
+    let chatMessage = <ChatMessage>{
+      timestamp: new Date(),
+      username: this.userService.user.username,
+      message: message
+    };
+
+    this.connection.send("sendMessage", chatMessage);
   }
 
   toggleChat(): void {

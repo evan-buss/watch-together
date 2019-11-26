@@ -7,10 +7,16 @@ namespace watch_together.Hubs
     public class ChatHub : Hub
     {
 
-        public async Task NewMessage(string username, string message)
+        public async Task SendMessage(ChatMessage chatMessage)
         {
-            Console.WriteLine("receivedMessage");
-            await Clients.All.SendAsync("messageReceived", username, message);
+            await Clients.All.SendAsync("broadcastMessage", chatMessage);
         }
+    }
+
+    public class ChatMessage
+    {
+        public DateTime Timestamp { get; set; }
+        public string Username { get; set; }
+        public string Message { get; set; }
     }
 }
