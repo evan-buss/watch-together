@@ -9,15 +9,17 @@ using Microsoft.AspNetCore.WebUtilities;
 using System.Text.Json.Serialization;
 
 namespace watch_together.Streaming
-{ /// <summary>
-  /// Discover contains static methods used to find movie files on the local file system.
-  /// </summary>
+{
+    /// <summary>
+    /// Discover contains static methods used to find movie files on the local file system.
+    /// </summary>
     public static class Discover
     {
-        private static HttpClient client = new HttpClient();
-        private static Regex titleMatcher = new Regex(@"(^.+)\s\((.+)\)");
+        private static readonly HttpClient Client = new HttpClient();
+        private static readonly Regex TitleMatcher = new Regex(@"(^.+)\s\((.+)\)");
 
-        private static string[] movieFormats ={
+        private static string[] movieFormats =
+        {
             ".avi",
             ".flv",
             ".h264",
@@ -35,42 +37,43 @@ namespace watch_together.Streaming
         /// found it attempts to load metadata from the online API. 
         /// </summary>
         /// <returns></returns>
-        public async static Task<List<MovieDBInfo>> FindMovies(string directory)
+        public static async Task<List<MovieDbInfo>> FindMovies(string directory)
         {
-
-            List<MovieDBInfo> details = new List<MovieDBInfo>();
+            List<MovieDbInfo> details = new List<MovieDbInfo>();
 
             var options = new EnumerationOptions
             {
                 RecurseSubdirectories = true
             };
 
-            var movies = Directory.EnumerateFiles(directory, "*", options)
-               .Where(file => movieFormats.Any(file.ToLower().EndsWith));
+            var movies = Directory.EnumerateFiles(path: directory, searchPattern: "*", enumerationOptions: options)
+                .Where(predicate: file => movieFormats.Any(predicate: s => file.ToLower().EndsWith(s)));
 
             foreach (string movie in movies)
             {
-                var info = ParseFile(Path.GetFileNameWithoutExtension(movie));
+                var info = ParseFile(Path.GetFileNameWithoutExtension(path: movie));
                 if (!(info is null))
                 {
                     var query = new Dictionary<string, string>()
                     {
-                        ["title"] = info.Title,
-                        ["year"] = info.Year,
+                        [key: "title"] = info.Title,
+                        [key: "year"] = info.Year,
                     };
-                    var url = QueryHelpers.AddQueryString("http://localhost:8080/", query);
-                    var response = await client.GetAsync(url);
+                    var url = QueryHelpers.AddQueryString(uri: "http://localhost:8080/", queryString: query);
+                    var response = await Client.GetAsync(url);
 
                     var res = await response.Content.ReadAsAsync<QueryData>();
 
                     if (res.Total > 0)
                     {
-                        details.Add(res.Movies[0]);
+                        details.Add(item: res.Movies[0]);
                     }
-                };
+                }
+
+                ;
             }
 
-            Console.WriteLine(details.Count);
+            Console.WriteLine(value: details.Count);
             return details;
         }
 
@@ -82,8 +85,12 @@ namespace watch_together.Streaming
         /// <returns>A MovieFile containing the parsed data or null if no match (invalid filename)</returns>
         private static MovieFile ParseFile(string fileName)
         {
-            if (!titleMatcher.IsMatch(fileName)) { return null; }
-            var match = titleMatcher.Match(fileName);
+            if (!TitleMatcher.IsMatch(fileName))
+            {
+                return null;
+            }
+
+            var match = TitleMatcher.Match(fileName);
 
             return new MovieFile
             {
@@ -102,14 +109,13 @@ namespace watch_together.Streaming
     public struct QueryData
     {
         public int Total { get; set; }
-        public MovieDBInfo[] Movies { get; set; }
+        public MovieDbInfo[] Movies { get; set; }
     }
 
-    public struct MovieDBInfo
+    public struct MovieDbInfo
     {
-        [JsonPropertyName("id")]
-        public int RowID { get; set; }
-        public string URL { get; set; }
+        [JsonPropertyName("id")] public int RowId { get; set; }
+        public string Url { get; set; }
         public string Poster { get; set; }
         public string Rating { get; set; }
         public string Summary { get; set; }

@@ -22,7 +22,7 @@ namespace watch_together.Controllers
         /// Retrieve the user's library
         /// </summary>
         /// <returns>Array of movie paths</returns>
-        public async Task<IEnumerable<MovieDBInfo>> GetLibrary()
+        public async Task<IEnumerable<MovieDbInfo>> GetLibrary()
         {
             var directory = _config.GetValue<string>("library:directory");
             return await Discover.FindMovies(directory);
