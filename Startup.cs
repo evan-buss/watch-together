@@ -11,6 +11,8 @@ namespace watch_together
 {
     public class Startup
     {
+        // FIXME: Use this when setting up the user config path
+        // Console.WriteLine(System.Environment.GetEnvironmentVariable("HOME"));
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;

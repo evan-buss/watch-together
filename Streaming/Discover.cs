@@ -9,15 +9,12 @@ using Microsoft.AspNetCore.WebUtilities;
 using System.Text.Json.Serialization;
 
 namespace watch_together.Streaming
-{
-    /// <summary>
-    /// Discover contains static methods used to find movie files on the local file system.
-    /// </summary>
+{ /// <summary>
+  /// Discover contains static methods used to find movie files on the local file system.
+  /// </summary>
     public static class Discover
     {
-        private static string directory = "/home/evan/Videos";
         private static HttpClient client = new HttpClient();
-
         private static Regex titleMatcher = new Regex(@"(^.+)\s\((.+)\)");
 
         private static string[] movieFormats ={
@@ -33,7 +30,12 @@ namespace watch_together.Streaming
             ".wmv",
         };
 
-        public async static Task<List<MovieDBInfo>> FindMovies()
+        /// <summary>
+        /// FindMovies searches for movie files in the given directory. For each movie 
+        /// found it attempts to load metadata from the online API. 
+        /// </summary>
+        /// <returns></returns>
+        public async static Task<List<MovieDBInfo>> FindMovies(string directory)
         {
 
             List<MovieDBInfo> details = new List<MovieDBInfo>();

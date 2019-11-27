@@ -1,11 +1,8 @@
+using System.IO;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace watch_together
 {
@@ -13,11 +10,30 @@ namespace watch_together
     {
         public static void Main(string[] args)
         {
+            CreateConfigIfNotExists();
             CreateWebHostBuilder(args).UseUrls(new string[] { "http://0.0.0.0:5000" }).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddIniFile("config.ini", optional: true, reloadOnChange: true);
+                }).UseStartup<Startup>();
+
+        public static void CreateConfigIfNotExists()
+        {
+            var homeDir = System.Environment.GetEnvironmentVariable("HOME");
+            var configFile = Path.Join(homeDir, ".config", "watch-together", "config.ini");
+            if (!File.Exists(configFile))
+            {
+                File.WriteAllText(configFile, @"
+                    [library]
+                    directory = ""/home/evan/videos""
+
+                    [server]
+                    port = 8080");
+            }
+        }
     }
 }
