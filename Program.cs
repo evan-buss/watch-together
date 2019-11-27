@@ -11,7 +11,8 @@ namespace watch_together
         public static void Main(string[] args)
         {
             CreateConfigIfNotExists();
-            CreateWebHostBuilder(args).UseUrls(new string[] { "http://0.0.0.0:5000" }).Build().Run();
+            //CreateWebHostBuilder(args).UseUrls(new string[] { "http://0.0.0.0:5000" }).Build().Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
@@ -23,17 +24,22 @@ namespace watch_together
 
         public static void CreateConfigIfNotExists()
         {
-            var homeDir = System.Environment.GetEnvironmentVariable("HOME");
-            var configFile = Path.Join(homeDir, ".config", "watch-together", "config.ini");
-            if (!File.Exists(configFile))
-            {
-                File.WriteAllText(configFile, @"
-                    [library]
-                    directory = ""/home/evan/videos""
+            //FIXME: Figure out if the SpecialFolder points to the right place on linux 
+            var videoDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyVideos,
+                Environment.SpecialFolderOption.Create);
+            var configDir = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData,
+                Environment.SpecialFolderOption.Create);
+            var configFile = Path.Combine(configDir, "watch-together", "config.ini");
+            Directory.CreateDirectory(Path.GetDirectoryName(configFile));
+            if (File.Exists(configFile)) return;
+            Console.WriteLine("Writing initial config file...");
 
-                    [server]
-                    port = 8080");
-            }
+            File.WriteAllText(configFile, "[library]\n" +
+                                          "directory=\""
+                                          + videoDir 
+                                          + "\"\n\n"
+                                          + "[server]\n" 
+                                          + "port = 8080");
         }
     }
 }
