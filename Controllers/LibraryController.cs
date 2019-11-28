@@ -8,7 +8,7 @@ using watch_together.Streaming;
 namespace watch_together.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class LibraryController : ControllerBase
     {
         private readonly IConfiguration _config;

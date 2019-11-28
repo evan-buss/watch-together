@@ -62,33 +62,32 @@ namespace watch_together.Streaming
                 {
                     Id = movieLibrary.Count(),
                     Path = moviePath,
+                    Metadata = null,
                     Modified = false
                 };
 
                 // Invalid title format, let the user handle metadata matching client-side
-                if (parsedData is null)
+                if (!(parsedData is null))
                 {
-                    movieFile.Metadata = null;
-                    continue;
+                    // Query the Metadata API to find movie by title and year
+                    var query = new Dictionary<string, string>()
+                    {
+                        [key: "title"] = parsedData.Title,
+                        [key: "year"] = parsedData.Year,
+                    };
+                    var url = QueryHelpers.AddQueryString(uri: "http://localhost:8080/", queryString: query);
+                    var response = await Client.GetAsync(url);
+
+                    // Retrieve the matching movies by converting from JSON to QueryData objects
+                    var res = await response.Content.ReadAsAsync<QueryData>();
+
+                    // Make sure results were found...
+                    if (res.Total != 0)
+                    {
+                        // TODO: The API should be able to return a single file in the new version
+                        movieFile.Metadata = res.Movies[0];
+                    }
                 }
-
-                // Query the Metadata API to find movie by title and year
-                var query = new Dictionary<string, string>()
-                {
-                    [key: "title"] = parsedData.Title,
-                    [key: "year"] = parsedData.Year,
-                };
-                var url = QueryHelpers.AddQueryString(uri: "http://localhost:8080/", queryString: query);
-                var response = await Client.GetAsync(url);
-
-                // Retrieve the matching movies by converting from JSON to QueryData objects
-                var res = await response.Content.ReadAsAsync<QueryData>();
-
-                // Make sure results were found...
-                if (res.Total == 0) continue;
-
-                // TODO: The API should be able to return a single file in the new version
-                movieFile.Metadata = res.Movies[0];
                 movieLibrary.Add(movieFile);
             }
 
@@ -131,13 +130,13 @@ namespace watch_together.Streaming
     /// <summary>
     /// QueryData is the object that is returned from querying the Metadata API
     /// </summary>
-    public struct QueryData
+    public class QueryData
     {
         public int Total { get; set; }
         public MovieDbInfo[] Movies { get; set; }
     }
 
-    public struct MovieDbInfo
+    public class MovieDbInfo
     {
         [JsonPropertyName("id")] public int RowId { get; set; }
         public string Url { get; set; }
@@ -153,11 +152,11 @@ namespace watch_together.Streaming
     /// It gives each movie a unique id, associated the path, and stores the movie's
     /// metadata.
     /// </summary>
-    public struct MovieLibrary
+    public class MovieLibrary
     {
         public int Id { get; set; }
         public string Path { get; set; }
         public bool Modified { get; set; }
-        public MovieDbInfo? Metadata { get; set; }
+        public MovieDbInfo Metadata { get; set; }
     }
 }
