@@ -16,6 +16,8 @@ import { ChatComponent } from './Component/chat/chat.component';
 import { MessageComponent } from './Component/chat/message/message.component';
 import { AuthGuard } from './Service/auth.guard';
 import { HostGuard } from './Service/host.guard';
+import { MetadataModalComponent } from './Component/library/metadata-modal/metadata-modal.component';
+import { LibraryMovieCardComponent } from './Component/library/library-movie-card/library-movie-card.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -36,6 +38,8 @@ const appRoutes: Routes = [
     NotificationsComponent,
     ChatComponent,
     MessageComponent,
+    MetadataModalComponent,
+    LibraryMovieCardComponent
   ],
   imports: [
     ReactiveFormsModule,

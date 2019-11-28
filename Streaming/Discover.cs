@@ -75,6 +75,7 @@ namespace watch_together.Streaming
                         [key: "title"] = parsedData.Title,
                         [key: "year"] = parsedData.Year,
                     };
+                    //TODO: Use a config variable for the metadata API
                     var url = QueryHelpers.AddQueryString(uri: "http://localhost:8080/", queryString: query);
                     var response = await Client.GetAsync(url);
 
