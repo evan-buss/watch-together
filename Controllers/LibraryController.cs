@@ -1,9 +1,9 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using watch_together.Streaming;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using watch_together.Services;
+using watch_together.Streaming;
 
 namespace watch_together.Controllers
 {
@@ -12,20 +12,37 @@ namespace watch_together.Controllers
     public class LibraryController : ControllerBase
     {
         private readonly IConfiguration _config;
+        private readonly LibraryService _service;
+
         public LibraryController(IConfiguration config)
         {
             _config = config;
+            _service = new LibraryService();
         }
 
-        [HttpGet]
+        // TODO: Define a JSON structure
+        // We need a way to define manual entries. Manual entries should never be overwritten
         /// <summary>
-        /// Retrieve the user's library
+        /// Scan performs a system scan on the directory given in the config file. 
+        /// It sends the results and writes the new library to a file
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("scan")]
+        public async Task<IEnumerable<MovieLibrary>> ScanLibrary()
+        {
+            var movies = await Discover.FindMovies(_config["library:directory"]);
+            _service.SaveMoviesToFile(movies, _config["configDir"]);
+            return movies;
+        }
+
+        /// <summary>
+        /// Retrieve the user's library via the stored library file.
         /// </summary>
         /// <returns>Array of movie paths</returns>
-        public async Task<IEnumerable<MovieDbInfo>> GetLibrary()
+        [HttpGet]
+        public async Task<ActionResult<MovieDbInfo>> GetLibrary()
         {
-            var directory = _config.GetValue<string>("library:directory");
-            return await Discover.FindMovies(directory);
+            return Ok(await _service.LoadMovies(_config["configDir"]));
         }
     }
 }

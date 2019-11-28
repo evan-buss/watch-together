@@ -1,5 +1,6 @@
-using System.IO;
 using System;
+using System.IO;
+using System.Collections.Generic;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +9,7 @@ namespace watch_together
 {
     public class Program
     {
+        private static string configFile;
         public static void Main(string[] args)
         {
             CreateConfigIfNotExists();
@@ -19,26 +21,34 @@ namespace watch_together
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
-                    config.AddIniFile("config.ini", optional: true, reloadOnChange: true);
+                    config.AddIniFile(configFile, optional: false, reloadOnChange: true);
+                    config.AddInMemoryCollection(new Dictionary<string, string>{
+                        {"configDir", Path.GetDirectoryName(configFile)}
+                    });
                 }).UseStartup<Startup>();
 
         public static void CreateConfigIfNotExists()
         {
-            //FIXME: Figure out if the SpecialFolder points to the right place on linux 
-            var videoDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyVideos,
+            // Get the user's default video directory
+            var sysVideoDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyVideos,
                 Environment.SpecialFolderOption.Create);
-            var configDir = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData,
+
+            // Get the user's config directory
+            var sysConfigDir = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData,
                 Environment.SpecialFolderOption.Create);
-            var configFile = Path.Combine(configDir, "watch-together", "config.ini");
-            Directory.CreateDirectory(Path.GetDirectoryName(configFile));
+            configFile = Path.Combine(sysConfigDir, "watch-together", "config.ini");
+
             if (File.Exists(configFile)) return;
+
+            // Make sure the directory exists by creating it by stripping file off configFile path
+            Directory.CreateDirectory(Path.GetDirectoryName(configFile));
             Console.WriteLine("Writing initial config file...");
 
             File.WriteAllText(configFile, "[library]\n" +
                                           "directory=\""
-                                          + videoDir 
+                                          + sysVideoDir
                                           + "\"\n\n"
-                                          + "[server]\n" 
+                                          + "[server]\n"
                                           + "port = 8080");
         }
     }
