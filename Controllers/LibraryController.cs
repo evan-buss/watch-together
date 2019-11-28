@@ -30,7 +30,7 @@ namespace watch_together.Controllers
         [HttpGet("scan")]
         public async Task<IEnumerable<MovieLibrary>> ScanLibrary()
         {
-            var movies = await Discover.FindMovies(_config["library:directory"]);
+            var movies = await Discover.FindMovies(_config["library:directory"], _config["apiUrl"]);
             _service.SaveMoviesToFile(movies, _config["configDir"]);
             return movies;
         }

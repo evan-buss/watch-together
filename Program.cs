@@ -23,7 +23,8 @@ namespace watch_together
                 {
                     config.AddIniFile(configFile, optional: false, reloadOnChange: true);
                     config.AddInMemoryCollection(new Dictionary<string, string>{
-                        {"configDir", Path.GetDirectoryName(configFile)}
+                        {"configDir", Path.GetDirectoryName(configFile)},
+                        {"apiUrl", "http://localhost:8080/"}
                     });
                 }).UseStartup<Startup>();
 

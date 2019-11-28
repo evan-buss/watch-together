@@ -37,7 +37,7 @@ namespace watch_together.Streaming
         /// found it attempts to load metadata from the online API. 
         /// </summary>
         /// <returns></returns>
-        public static async Task<List<MovieLibrary>> FindMovies(string directory)
+        public static async Task<List<MovieLibrary>> FindMovies(string directory, string apiUrl)
         {
             // Stored all the found library objects 
             var movieLibrary = new List<MovieLibrary>();
@@ -75,8 +75,7 @@ namespace watch_together.Streaming
                         [key: "title"] = parsedData.Title,
                         [key: "year"] = parsedData.Year,
                     };
-                    //TODO: Use a config variable for the metadata API
-                    var url = QueryHelpers.AddQueryString(uri: "http://localhost:8080/", queryString: query);
+                    var url = QueryHelpers.AddQueryString(uri: apiUrl, queryString: query);
                     var response = await Client.GetAsync(url);
 
                     // Retrieve the matching movies by converting from JSON to QueryData objects
