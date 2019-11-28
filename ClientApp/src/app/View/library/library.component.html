@@ -1,5 +1,4 @@
 <div class="h-full bg-gray-300">
-    <!-- on:update={updateMetadata} > -->
     <app-metadata-modal *ngIf="showModal" (close)="showModal = false"></app-metadata-modal>
 
     <div class="lg:w-10/12 mx-auto">
@@ -9,6 +8,9 @@
             <input type="text" [(ngModel)]="searchTerm" class="appearance-none outline-none rounded p-2 w-full max-w-sm sm:w-64
         focus:shadow-outline" placeholder="Search" />
         </div>
+        <h1 *ngIf="errorMessage !== ''" class="text-center text-2xl font-bold font-sans text-gray-500 mt-12">
+            {{errorMessage}}
+        </h1>
         <!-- Movie Cards List -->
         <!-- {#if netError} -->
         <!-- <h1 class="text-center text-2xl font-bold font-sans text-gray-500 mt-12">
@@ -17,24 +19,12 @@
             to generate your library
         </h1>
         {:else if movies.length === 0}
-        <h1 class="text-center text-2xl font-bold font-sans text-gray-500 mt-12">
-            Unable to locate any movies.
-        </h1> -->
+       -->
         <!-- {:else} -->
         <!-- List of movie cards based on the initial library request -->
         <div class="flex flex-wrap justify-center items-center">
             <app-library-movie-card *ngFor="let movie of movies" [movie]="movie" (play)="handlePlay(movie)"
                 (edit)="handleEdit(movie)"></app-library-movie-card>
-            <!-- {#each movies as metadata (metadata.id)}
-          <MovieCard
-            {metadata}
-            {filterText}
-            on:play={() => console.log(metadata)}
-            on:open={() => {
-              showMetadata = true;
-              metadataItem = metadata;
-            }} />
-        {/each} -->
         </div>
         <!-- {/if} -->
     </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieFile, LibraryService } from 'src/app/Component/library/library.service';
 import { NotificationService } from 'src/app/Component/notifications/notification.service';
+import { error } from 'util';
 
 @Component({
   selector: 'app-library',
@@ -9,6 +10,7 @@ import { NotificationService } from 'src/app/Component/notifications/notificatio
 export class LibraryComponent implements OnInit {
   searchTerm: string = "";
   showModal: boolean = false;
+  errorMessage: string = "";
 
   // Maintain a private complete list of movies
   private _movies: MovieFile[] = [];
@@ -40,7 +42,15 @@ export class LibraryComponent implements OnInit {
     // TODO: Handle errors
     //    -- Connection
     //    -- No files in library (prompt with "scan" button)
-    this.libraryService.getLibrary().subscribe((movies: MovieFile[]) => this._movies = movies);
-    console.log(this.movies);
+    this.libraryService.getLibrary()
+      .subscribe(
+        (movies: MovieFile[]) => {
+          this._movies = movies;
+          if (this._movies.length === 0) {
+            this.errorMessage = "You don't have any movies in your library. Add movies and rescan...";
+          }
+        },
+        error => this.errorMessage = error
+      );
   }
 }

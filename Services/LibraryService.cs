@@ -15,7 +15,9 @@ namespace watch_together.Services
         /// <returns></returns>
         public async Task<IEnumerable<MovieLibrary>> LoadMovies(string fileDir)
         {
-            await using var fs = File.OpenRead(Path.Combine(fileDir, "movies.json"));
+            var filePath = Path.Combine(fileDir, "movies.json");
+            if (!File.Exists(filePath)) return new MovieLibrary[0];
+            await using var fs = File.OpenRead(filePath);
             return await JsonSerializer.DeserializeAsync<MovieLibrary[]>(fs);
         }
 
