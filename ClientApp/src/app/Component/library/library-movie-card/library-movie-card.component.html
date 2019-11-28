@@ -1,0 +1,99 @@
+<!--{#if matchesFilter}-->
+<!--{#if movie}-->
+<div
+  (mouseleave)="isHover = false"
+  *ngIf="movie.metadata; else blankcard"
+  class="w-full h-56 max-w-sm rounded-lg shadow-xl my-2 sm:mx-2 bg-gray-100
+flex flex-row relative">
+  <!-- Poster -->
+  <div
+    (click)="play.emit(null)"
+    *ngIf="isHover"
+    class="absolute top-0 left-0 h-full w-full rounded-lg opacity-75
+          bg-black flex items-center justify-center cursor-pointer">
+    <i
+      class="opacity-100 la la-play-circle text-6xl text-white
+            hover:text-green-500"></i>
+  </div>
+  <img
+    (mouseenter)="isHover = true"
+    src="{{movie.metadata.poster}}"
+    alt="{{movie.metadata.title}} poster"
+    class="rounded-lg rounded-r-none object-cover object-left-top"/>
+  <!-- Content Container -->
+  <div class="p-2 h-full flex flex-col justify-between">
+    <!-- Title and Summary Container -->
+    <div>
+      <a
+        href="{{movie.metadata.url}}"
+        target="_blank"
+        rel="noopener"
+        class="font-bold text-xl text-gray-800 mb-2 break-words">
+        {{movie.metadata.title}}
+      </a>
+      <div class="text-base text-gray-600">{{movie.metadata.summary}}</div>
+    </div>
+
+    <!-- Details -->
+    <div class="flex items-center justify-between items-baseline px-2">
+      <div class="text-base text-gray-900 font-bold">{{movie.metadata.year}}</div>
+      <!--    on:click={() => dispatch('open')}-->
+      <i
+        (click)="edit.emit(null)"
+        class="la la-cog p-1 hover:text-green-600 hover:shadow rounded-full
+    cursor-pointer"></i>
+      <span>
+      <i *ngIf="movie.metadata.rating" class="la la-star text-yellow-500 text-xl"></i>
+            <span class="text-base text-gray-600">
+              {{movie.metadata.rating === undefined ? 'Not available' : movie.metadata.rating}}
+            </span>
+          </span>
+    </div>
+  </div>
+</div>
+<ng-template #blankcard>
+  <div
+    (mouseleave)="isHover = false"
+    class="w-full h-56 max-w-sm rounded-lg shadow-xl my-2 sm:mx-2 bg-gray-100
+flex flex-row relative">
+    <div
+      (click)="play.emit(null)"
+      *ngIf="isHover"
+      class="absolute top-0 left-0 h-full w-full rounded-lg opacity-75
+          bg-black flex items-center justify-center cursor-pointer">
+      <i
+        class="opacity-100 la la-play-circle text-6xl text-white
+            hover:text-green-500"></i>
+    </div>
+    <!-- Image -->
+    <div
+      (mouseenter)="isHover = true"
+      class="w-5/12 bg-gray-900 rounded-lg rounded-r-none text-6xl text-white
+font-mono flex justify-center items-center select-none">
+      ?
+    </div>
+    <!-- Movie Details -->
+    <div class="w-7/12 h-full flex flex-col justify-between ">
+      <!-- Title -->
+      <div class="p-2 font-bold text-xl text-gray-800 mb-2 break-words">
+        {{filename}}
+      </div>
+      <!-- Summary -->
+      <div class="p-2 text-base flex-grow text-gray-600">
+        Unable to automatically determine metadata. Please enter manually.
+      </div>
+      <!-- Bottom Bar -->
+      <div class="flex items-center justify-between items-baseline">
+        <div
+          (click)="edit.emit(null)"
+          class="p-2 w-full text-white bg-red-500 hover:bg-red-400
+    cursor-pointer text-center rounded-br-lg select-none">
+          Edit Metadata
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!--{/if}-->
+<!--{/if}-->
