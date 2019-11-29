@@ -33,4 +33,5 @@ export interface Notification {
   title: string;
   message: string;
   movie?: boolean;
+  poster?: string
 }

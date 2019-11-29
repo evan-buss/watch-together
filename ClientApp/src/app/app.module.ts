@@ -20,6 +20,8 @@ import { MetadataModalComponent } from './Component/library/metadata-modal/metad
 import { LibraryMovieCardComponent } from './Component/library/library-movie-card/library-movie-card.component';
 import { MetadataItemComponent } from './Component/library/metadata-modal/metadata-item/metadata-item.component';
 import { PaginationComponent } from './Component/library/metadata-modal/pagination/pagination.component';
+import { DefaultNotificationComponent } from './Component/notifications/default-notification/default-notification.component';
+import { MovieNotificationComponent } from './Component/notifications/movie-notification/movie-notification.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -43,7 +45,9 @@ const appRoutes: Routes = [
     MetadataModalComponent,
     LibraryMovieCardComponent,
     MetadataItemComponent,
-    PaginationComponent
+    PaginationComponent,
+    DefaultNotificationComponent,
+    MovieNotificationComponent
   ],
   imports: [
     ReactiveFormsModule,

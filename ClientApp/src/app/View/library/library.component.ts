@@ -29,13 +29,20 @@ export class LibraryComponent implements OnInit {
   constructor(private libraryService: LibraryService,
     private notifService: NotificationService) { }
 
+  scanLibrary(): void {
+    // TODO: Make button rotate while loading. Scanning often takes a bit of time. Make it interactive.
+    this.libraryService.scanLibrary().subscribe(movies => this._movies = movies);
+  }
+
   handlePlay(movie: MovieFile) {
-    this.notifService.addTemporary({ title: "Test", message: "Now playing" });
-    console.log("handle play");
+    if (movie.metadata) {
+      this.notifService.addTemporary({ title: movie.metadata.title, message: "Now playing", movie: true, poster: movie.metadata.poster });
+    } else {
+      this.notifService.addTemporary({ title: "Unkown", message: "Now playing", movie: true });
+    }
   }
 
   handleEdit(movie: MovieFile) {
-    console.log("handle edit");
     this.showModal = true;
     this.selectedMovie = movie;
   }

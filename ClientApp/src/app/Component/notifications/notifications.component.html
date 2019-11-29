@@ -1,21 +1,12 @@
+<!-- Position Notifications in the top right -->
 <div class="z-30 fixed top-0 right-0 mt-2 mr-2 w-full max-w-sm flex flex-col">
-
-  <div *ngFor="let notification of notificationService.notifications">
-    <div class="relative rounded shadow-lg w-full max-w-sm bg-white p-2 mb-2">
-      <div class="flex flex-row w-full justify-between">
-        <h1 class="font-bold text-blue-600 truncate">{{notification.title}}</h1>
-        <i (click)="clearNotification(notification)" class="absolute right-0 top-0 mt-1 mr-1 la la-times-circle text-2xl
-          text-red-500 hover:text-red-300 cursor-pointer"></i>
-      </div>
-      <span class="text-gray-600 break-words">{{notification.message}}</span>
-    </div>
-
-  </div>
-
-  <!-- <MovieMessage
-    on:close={() => notifications.remove(notification)}
-    {notification} /> -->
-  <!-- <GenericMessage
-      on:close={() => notifications.remove(notification)}
-      {notification} /> -->
+  <!-- Notification container -->
+  <ng-container *ngFor="let notification of notificationService.notifications">
+    <app-movie-notification *ngIf="notification.movie;else default" (close)="clearNotification(notification)"
+      [notification]="notification"></app-movie-notification>
+    <ng-template #default>
+      <app-default-notification (close)="clearNotification(notification)" [notification]="notification">
+      </app-default-notification>
+    </ng-template>
+  </ng-container>
 </div>
