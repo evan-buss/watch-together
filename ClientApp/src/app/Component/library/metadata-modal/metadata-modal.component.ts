@@ -1,13 +1,16 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { LibraryService, APIResult } from '../library.service';
+import { Component, EventEmitter, OnInit, Output, Input, OnDestroy } from '@angular/core';
+import { LibraryService, APIResult, MovieMetadata, MovieFile } from '../library.service';
 import { tap } from 'rxjs/operators';
+import { emit } from 'cluster';
 
 @Component({
   selector: 'app-metadata-modal',
   templateUrl: './metadata-modal.component.html',
 })
-export class MetadataModalComponent implements OnInit {
+export class MetadataModalComponent implements OnInit, OnDestroy {
+  @Input() selectedMovie: MovieFile;
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
+  @Output() libraryUpdated: EventEmitter<MovieFile[]> = new EventEmitter<MovieFile[]>();
   title: string;
   year: string;
   results: APIResult = null;
@@ -36,6 +39,11 @@ export class MetadataModalComponent implements OnInit {
       );
   }
 
+  updateMetadata(movie: MovieMetadata): void {
+    this.libraryService.updateMovie(this.selectedMovie.id, movie)
+      .subscribe(movies => this.libraryUpdated.emit(movies));
+    this.close.emit(null);
+  }
 
   handlePageChange(isNext: boolean): void {
     if (isNext) {
@@ -47,5 +55,25 @@ export class MetadataModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.addEventListener("keydown", (event) => this.handleEscapeKey(event));
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener("keydown", (event) => this.handleEscapeKey(event));
+  }
+
+  // Allow escape key to close the modal
+  handleEscapeKey(event: KeyboardEvent): void {
+    if (event.keyCode === 27) {
+      event.preventDefault();
+      this.close.emit(null);
+    }
+  }
+
+  handleEnter(event: KeyboardEvent): void {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      this.search();
+    }
   }
 }

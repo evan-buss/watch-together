@@ -11,6 +11,7 @@ export class LibraryComponent implements OnInit {
   searchTerm: string = "";
   showModal: boolean = false;
   errorMessage: string = "";
+  selectedMovie: MovieFile;
 
   // Maintain a private complete list of movies
   private _movies: MovieFile[] = [];
@@ -36,6 +37,11 @@ export class LibraryComponent implements OnInit {
   handleEdit(movie: MovieFile) {
     console.log("handle edit");
     this.showModal = true;
+    this.selectedMovie = movie;
+  }
+
+  updateMovies(movies: MovieFile[]) {
+    this._movies = movies;
   }
 
   ngOnInit() {

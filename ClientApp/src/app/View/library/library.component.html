@@ -1,5 +1,7 @@
 <div class="h-full bg-gray-300">
-    <app-metadata-modal *ngIf="showModal" (close)="showModal = false"></app-metadata-modal>
+    <app-metadata-modal *ngIf="showModal" [selectedMovie]="selectedMovie" (close)="showModal = false"
+        (libraryUpdated)="updateMovies($event)">
+    </app-metadata-modal>
 
     <div class="lg:w-10/12 mx-auto">
         <!-- Top Panel Controls -->
@@ -11,21 +13,10 @@
         <h1 *ngIf="errorMessage !== ''" class="text-center text-2xl font-bold font-sans text-gray-500 mt-12">
             {{errorMessage}}
         </h1>
-        <!-- Movie Cards List -->
-        <!-- {#if netError} -->
-        <!-- <h1 class="text-center text-2xl font-bold font-sans text-gray-500 mt-12">
-            Please run
-            <code class="text-gray-800 bg-white p-2">watch-together init</code>
-            to generate your library
-        </h1>
-        {:else if movies.length === 0}
-       -->
-        <!-- {:else} -->
         <!-- List of movie cards based on the initial library request -->
         <div class="flex flex-wrap justify-center items-center">
             <app-library-movie-card *ngFor="let movie of movies" [movie]="movie" (play)="handlePlay(movie)"
                 (edit)="handleEdit(movie)"></app-library-movie-card>
         </div>
-        <!-- {/if} -->
     </div>
 </div>

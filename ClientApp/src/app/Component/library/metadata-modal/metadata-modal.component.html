@@ -13,8 +13,7 @@
           mb-2 ml-1">
           Title
         </label>
-        <!--        on:keypress={handleEnter}-->
-        <input [(ngModel)]="title" class="appearance-none block w-full bg-gray-200 text-gray-700 border
+        <input (keypress)="handleEnter($event)" [(ngModel)]="title" class="appearance-none block w-full bg-gray-200 text-gray-700 border
           border-gray-200 rounded py-2 px-4 mb-3 leading-tight
           focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="The Matrix" />
       </div>
@@ -23,9 +22,8 @@
           mb-2 ml-1" for="grid-last-name">
           Year
         </label>
-        <!--        on:keypress={handleEnter}-->
         <!-- TODO: Enforce valid years only... -->
-        <input [(ngModel)]="year" class="appearance-none block w-full bg-gray-200 text-gray-700 border
+        <input (keypress)="handleEnter($event)" [(ngModel)]="year" class="appearance-none block w-full bg-gray-200 text-gray-700 border
           border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none
           focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="1999" />
       </div>
@@ -53,19 +51,12 @@
       </div>
       <!-- Table Body -->
       <div class="w-full rounded border-2 border-gray-300 flex flex-col">
-        <app-metadata-item *ngFor="let movie of results.movies; index as i;" [movie]="movie" [alternate]="i % 2 === 0">
+        <app-metadata-item *ngFor="let movie of results.movies; index as i;" [movie]="movie" [alternate]="i % 2 === 0"
+          (update)="updateMetadata(movie)">
         </app-metadata-item>
       </div>
-
       <app-pagination [total]="results.total" [perPage]="10" [currentPage]="currentPage"
         (pageChange)="handlePageChange($event)"></app-pagination>
-
     </ng-template>
-    <!--    <Pagination-->
-    <!--      total={totalSearchResults}-->
-    <!--      perPage={10}-->
-    <!--      {currentPage}-->
-    <!--      on:page={handlePageChange} />-->
-    <!--    {/if}-->
   </div>
 </div>

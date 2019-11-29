@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError } from 'rxjs/operators';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
@@ -14,7 +14,7 @@ export class LibraryService {
   libraryUrl = "api/library";
   scanUrl = "api/library/scan";
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) { }
+  constructor(private http: HttpClient) { }
 
   getLibrary(): Observable<MovieFile[]> {
     return this.http.get<MovieFile[]>(this.libraryUrl).pipe(catchError(this.handleError));
@@ -44,6 +44,17 @@ export class LibraryService {
     console.log(query);
 
     return this.http.get<APIResult>(this.metadataAPI + query).pipe(catchError(this.handleError));
+  }
+
+  updateMovie(libraryID: number, metadata: MovieMetadata): Observable<MovieFile[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+
+    return this.http.post<MovieFile[]>(this.libraryUrl + `/?libraryID=${libraryID}`, metadata, httpOptions)
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

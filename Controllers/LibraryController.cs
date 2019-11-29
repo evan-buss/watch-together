@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -42,7 +43,14 @@ namespace watch_together.Controllers
         [HttpGet]
         public async Task<ActionResult<MovieDbInfo>> GetLibrary()
         {
-            return Ok(await _service.LoadMovies(_config["configDir"]));
+            return Ok(await _service.LoadMoviesFromFile(_config["configDir"]));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<MovieLibrary>>> UpdateMovie(int libraryID, [FromBody] MovieDbInfo metadata)
+        {
+            var updatedLibrary = await _service.UpdateMovie(libraryID, metadata, _config["configDir"]);
+            return Ok(updatedLibrary);
         }
     }
 }
