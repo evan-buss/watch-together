@@ -113,6 +113,25 @@
                   <e p="message.component.ts" t="Include" />
                 </e>
               </e>
+              <e p="library" t="Include">
+                <e p="library-movie-card" t="Include">
+                  <e p="library-movie-card.component.html" t="Include" />
+                  <e p="library-movie-card.component.spec.ts" t="Include" />
+                  <e p="library-movie-card.component.ts" t="Include" />
+                </e>
+                <e p="library.service.spec.ts" t="Include" />
+                <e p="library.service.ts" t="Include" />
+                <e p="metadata-modal" t="Include">
+                  <e p="metadata-item" t="Include">
+                    <e p="metadata-item.component.html" t="Include" />
+                    <e p="metadata-item.component.spec.ts" t="Include" />
+                    <e p="metadata-item.component.ts" t="Include" />
+                  </e>
+                  <e p="metadata-modal.component.html" t="Include" />
+                  <e p="metadata-modal.component.spec.ts" t="Include" />
+                  <e p="metadata-modal.component.ts" t="Include" />
+                </e>
+              </e>
               <e p="nav-menu" t="Include">
                 <e p="nav-menu.component.html" t="Include" />
                 <e p="nav-menu.component.ts" t="Include" />

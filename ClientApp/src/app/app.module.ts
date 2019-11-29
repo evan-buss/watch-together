@@ -18,6 +18,8 @@ import { AuthGuard } from './Service/auth.guard';
 import { HostGuard } from './Service/host.guard';
 import { MetadataModalComponent } from './Component/library/metadata-modal/metadata-modal.component';
 import { LibraryMovieCardComponent } from './Component/library/library-movie-card/library-movie-card.component';
+import { MetadataItemComponent } from './Component/library/metadata-modal/metadata-item/metadata-item.component';
+import { PaginationComponent } from './Component/library/metadata-modal/pagination/pagination.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -39,7 +41,9 @@ const appRoutes: Routes = [
     ChatComponent,
     MessageComponent,
     MetadataModalComponent,
-    LibraryMovieCardComponent
+    LibraryMovieCardComponent,
+    MetadataItemComponent,
+    PaginationComponent
   ],
   imports: [
     ReactiveFormsModule,

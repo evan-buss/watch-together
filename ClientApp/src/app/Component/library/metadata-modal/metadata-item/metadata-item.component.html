@@ -1,0 +1,16 @@
+<div [ngClass]="alternate ? 'bg-gray-200 hover:bg-blue-100' : 'bg-white hover:bg-blue-100'"
+    class=" p-2 w-full flex justify-center items-center">
+    <a [href]="movie.url" target=" _blank" rel="noopener" class="w-2/12 truncate">
+        {{movie.title}}
+    </a>
+    <span class="w-7/12 truncate">{{movie.summary}}</span>
+    <span class="w-1/12">{{movie.year}}</span>
+    <span class="w-1/12 text-center">
+        <i class="la la-star text-yellow-500"></i>
+        {{movie.rating}}
+    </span>
+    <!-- on:click={()=> dispatch('update', movie.id)} -->
+    <button class="w-1/12 p-1 bg-blue-400 hover:bg-blue-300 rounded-sm text-white">
+        Update
+    </button>
+</div>

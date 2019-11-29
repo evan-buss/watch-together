@@ -1,0 +1,12 @@
+<div class="w-full flex justify-end items-center m-1">
+    <!-- Results Info -->
+    <div class="text-gray-500 mr-2">
+        Showing {{currentPage * perPage}}-{{max}} of {{total}}
+    </div>
+    <!-- Left Arrow -->
+    <i (click)="prevPage()" class="la la-angle-double-left p-2 m-1 shadow rounded bg-gray-100
+    cursor-pointer"></i>
+    <!-- Right Arrow -->
+    <i (click)="nextPage()" class="la la-angle-double-right p-2 m-1 shadow rounded bg-gray-100
+    cursor-pointer"></i>
+</div>
