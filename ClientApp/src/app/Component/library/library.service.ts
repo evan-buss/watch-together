@@ -46,14 +46,19 @@ export class LibraryService {
     return this.http.get<APIResult>(this.metadataAPI + query).pipe(catchError(this.handleError));
   }
 
-  updateMovie(libraryID: number, metadata: MovieMetadata): Observable<MovieFile[]> {
+  updateMovie(movie: MovieFile, metadata?: MovieMetadata): Observable<MovieFile[]> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     }
 
-    return this.http.post<MovieFile[]>(this.libraryUrl + `/?libraryID=${libraryID}`, metadata, httpOptions)
+    if (metadata === null) {
+      return this.http.delete<MovieFile[]>(this.libraryUrl + `/?libraryID=${movie.id}`)
+        .pipe(catchError(this.handleError));
+    }
+
+    return this.http.post<MovieFile[]>(this.libraryUrl + `/?libraryID=${movie.id}`, metadata, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

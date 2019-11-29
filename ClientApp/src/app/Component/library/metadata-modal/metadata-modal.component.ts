@@ -1,7 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, Input, OnDestroy } from '@angular/core';
 import { LibraryService, APIResult, MovieMetadata, MovieFile } from '../library.service';
-import { tap } from 'rxjs/operators';
-import { emit } from 'cluster';
 
 @Component({
   selector: 'app-metadata-modal',
@@ -39,10 +37,14 @@ export class MetadataModalComponent implements OnInit, OnDestroy {
       );
   }
 
-  updateMetadata(movie: MovieMetadata): void {
-    this.libraryService.updateMovie(this.selectedMovie.id, movie)
+  clearMetadata(): void {
+    this.libraryService.updateMovie(this.selectedMovie, null)
       .subscribe(movies => this.libraryUpdated.emit(movies));
-    this.close.emit(null);
+  }
+
+  updateMetadata(movie: MovieMetadata): void {
+    this.libraryService.updateMovie(this.selectedMovie, movie)
+      .subscribe(movies => this.libraryUpdated.emit(movies));
   }
 
   handlePageChange(isNext: boolean): void {

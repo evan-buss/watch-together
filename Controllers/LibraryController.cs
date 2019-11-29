@@ -46,6 +46,13 @@ namespace watch_together.Controllers
             return Ok(await _service.LoadMoviesFromFile(_config["configDir"]));
         }
 
+        [HttpDelete]
+        public async Task<ActionResult<IEnumerable<MovieLibrary>>> UpdateMovie(int libraryID)
+        {
+            var updatedLibrary = await _service.UpdateMovie(libraryID, null, _config["configDir"]);
+            return Ok(updatedLibrary);
+        }
+
         [HttpPost]
         public async Task<ActionResult<IEnumerable<MovieLibrary>>> UpdateMovie(int libraryID, [FromBody] MovieDbInfo metadata)
         {

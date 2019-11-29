@@ -41,6 +41,7 @@ export class LibraryComponent implements OnInit {
   }
 
   updateMovies(movies: MovieFile[]) {
+    this.showModal = false;
     this._movies = movies;
   }
 
