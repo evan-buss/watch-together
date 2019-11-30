@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using watch_together.Hubs;
+using watch_together.Services;
+
 
 namespace watch_together
 {
@@ -26,6 +28,7 @@ namespace watch_together
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddSingleton<ILibraryService, LibraryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

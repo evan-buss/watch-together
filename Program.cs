@@ -23,20 +23,23 @@ namespace watch_together
                 {
                     config.AddIniFile(configFile, optional: false, reloadOnChange: true);
                     config.AddInMemoryCollection(new Dictionary<string, string>{
-                        {"configDir", Path.GetDirectoryName(configFile)},
-                        {"apiUrl", "http://localhost:8080/"}
+                        {"config", Path.GetDirectoryName(configFile)},
+                        {"api", "http://localhost:8080/"}
                     });
                 }).UseStartup<Startup>();
 
         public static void CreateConfigIfNotExists()
         {
             // Get the user's default video directory
-            var sysVideoDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyVideos,
-                Environment.SpecialFolderOption.Create);
+            var sysVideoDir = System.Environment.GetFolderPath(
+                    Environment.SpecialFolder.MyVideos,
+                    Environment.SpecialFolderOption.Create);
 
             // Get the user's config directory
-            var sysConfigDir = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData,
-                Environment.SpecialFolderOption.Create);
+            var sysConfigDir = System.Environment.GetFolderPath(
+                    Environment.SpecialFolder.ApplicationData,
+                    Environment.SpecialFolderOption.Create);
+
             configFile = Path.Combine(sysConfigDir, "watch-together", "config.ini");
 
             if (File.Exists(configFile)) return;
@@ -48,7 +51,8 @@ namespace watch_together
             File.WriteAllText(configFile, "[library]\n" +
                                           "directory=\""
                                           + sysVideoDir
-                                          + "\"\n\n"
+                                          + "\"\n"
+                                          + "database = \"movies.json\"\n\n"
                                           + "[server]\n"
                                           + "port = 8080");
         }

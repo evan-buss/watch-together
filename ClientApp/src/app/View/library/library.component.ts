@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieFile, LibraryService } from 'src/app/Component/library/library.service';
 import { NotificationService } from 'src/app/Component/notifications/notification.service';
-import { error } from 'util';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-library',
@@ -12,6 +12,7 @@ export class LibraryComponent implements OnInit {
   showModal: boolean = false;
   errorMessage: string = "";
   selectedMovie: MovieFile;
+  loading: boolean = false;
 
   // Maintain a private complete list of movies
   private _movies: MovieFile[] = [];
@@ -30,8 +31,9 @@ export class LibraryComponent implements OnInit {
     private notifService: NotificationService) { }
 
   scanLibrary(): void {
-    // TODO: Make button rotate while loading. Scanning often takes a bit of time. Make it interactive.
-    this.libraryService.scanLibrary().subscribe(movies => this._movies = movies);
+    this.loading = true;
+    this.libraryService.scanLibrary()
+      .subscribe(movies => { this._movies = movies; this.loading = false; });
   }
 
   handlePlay(movie: MovieFile) {
@@ -53,9 +55,6 @@ export class LibraryComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO: Handle errors
-    //    -- Connection
-    //    -- No files in library (prompt with "scan" button)
     this.libraryService.getLibrary()
       .subscribe(
         (movies: MovieFile[]) => {

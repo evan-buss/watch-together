@@ -1,4 +1,4 @@
-using System;
+using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,16 +12,14 @@ namespace watch_together.Controllers
     [Route("api/[controller]")]
     public class LibraryController : ControllerBase
     {
-        private readonly IConfiguration _config;
-        private readonly LibraryService _service;
+        private readonly ILibraryService _service;
 
-        public LibraryController(IConfiguration config)
+        public LibraryController(ILibraryService service)
         {
-            _config = config;
-            _service = new LibraryService();
+            _service = service;
+            // _service = new LibraryService(Path.Combine(_config["config"], _config["library:database"]), _config["library:directory"], _config["api"]);
         }
 
-        // TODO: Define a JSON structure
         // We need a way to define manual entries. Manual entries should never be overwritten
         /// <summary>
         /// Scan performs a system scan on the directory given in the config file. 
@@ -29,11 +27,10 @@ namespace watch_together.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("scan")]
-        public async Task<IEnumerable<MovieLibrary>> ScanLibrary()
+        public async Task<IEnumerable<MovieLibraryFile>> ScanLibrary()
         {
-            var movies = await Discover.FindMovies(_config["library:directory"], _config["apiUrl"]);
-            _service.SaveMoviesToFile(movies, _config["configDir"]);
-            return movies;
+            var library = await _service.ScanLibrary();
+            return library;
         }
 
         /// <summary>
@@ -41,22 +38,33 @@ namespace watch_together.Controllers
         /// </summary>
         /// <returns>Array of movie paths</returns>
         [HttpGet]
-        public async Task<ActionResult<MovieDbInfo>> GetLibrary()
+        public async Task<ActionResult<Metadata>> GetLibrary()
         {
-            return Ok(await _service.LoadMoviesFromFile(_config["configDir"]));
+            return Ok(await _service.GetLibrary());
         }
 
+        /// <summary>
+        /// DeleteMetadata removes the metdata associated with a specific movie file
+        /// </summary>
+        /// <param name="libraryID"></param>
+        /// <returns>The new library as a list of MovieLibraryFile</returns>
         [HttpDelete]
-        public async Task<ActionResult<IEnumerable<MovieLibrary>>> UpdateMovie(int libraryID)
+        public ActionResult<IEnumerable<MovieLibraryFile>> DeleteMetdata(int libraryID)
         {
-            var updatedLibrary = await _service.UpdateMovie(libraryID, null, _config["configDir"]);
+            var updatedLibrary = _service.UpdateMovie(libraryID, null);
             return Ok(updatedLibrary);
         }
 
+        /// <summary>
+        /// UpdateMovie updates a specific movie with new metadata
+        /// </summary>
+        /// <param name="libraryID">The library ID of the movie to be updated</param>
+        /// <param name="metadata">A JSON Metdata object containing the new metdata information</param>
+        /// <returns>The new library as a list of MovieLibraryFile</returns>
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<MovieLibrary>>> UpdateMovie(int libraryID, [FromBody] MovieDbInfo metadata)
+        public ActionResult<IEnumerable<MovieLibraryFile>> UpdateMovie(int libraryID, [FromBody] Metadata metadata)
         {
-            var updatedLibrary = await _service.UpdateMovie(libraryID, metadata, _config["configDir"]);
+            var updatedLibrary = _service.UpdateMovie(libraryID, metadata);
             return Ok(updatedLibrary);
         }
     }
