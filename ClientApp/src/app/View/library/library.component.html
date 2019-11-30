@@ -8,8 +8,10 @@
         <div class="full flex flex-col sm:flex-row justify-between items-center px-4">
             <h1 class="text-3xl font-bold font-sans py-4">Movie Library</h1>
             <div class="flex flex-row">
-                <i (click)="scanLibrary()" [ngClass]="loading && 'rotate'"
-                    class="las la-sync rounded-full p-3 mr-4 bg-white hover:shadow-lg cursor-pointer"></i>
+                <div (click)="scanLibrary()"
+                    class="w-10 h-10 mr-4 flex items-center justify-center bg-white hover:shadow-lg cursor-pointer rounded-full">
+                    <i [ngClass]="loading && 'rotate'" class="las la-sync"></i>
+                </div>
                 <input type="text" [(ngModel)]="searchTerm" class="appearance-none outline-none rounded p-2 w-full max-w-sm sm:w-64
                     focus:shadow-outline" placeholder="Search" />
             </div>
@@ -24,15 +26,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .rotate {
-        animation: spin 4s linear infinite;
-    }
-
-    @keyframes spin {
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-</style>

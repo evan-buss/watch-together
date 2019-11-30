@@ -34,10 +34,7 @@
         </button>
       </div>
     </div>
-
-    <!--    {#if errorMessage !== ''}-->
-    <!--    <div class="text-center p-6 text-red-500">{errorMessage}</div>-->
-    <!--    {:else if items.length === 0}-->
+    <!-- Error Message -->
     <div *ngIf="errorMessage !== ''; else table" class="text-center p-6 text-gray-500">
       {{errorMessage}}
     </div>

@@ -22,6 +22,7 @@ import { MetadataItemComponent } from './Component/library/metadata-modal/metada
 import { PaginationComponent } from './Component/library/metadata-modal/pagination/pagination.component';
 import { DefaultNotificationComponent } from './Component/notifications/default-notification/default-notification.component';
 import { MovieNotificationComponent } from './Component/notifications/movie-notification/movie-notification.component';
+import { VideoPlayerComponent } from './Component/video-player/video-player.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -47,7 +48,8 @@ const appRoutes: Routes = [
     MetadataItemComponent,
     PaginationComponent,
     DefaultNotificationComponent,
-    MovieNotificationComponent
+    MovieNotificationComponent,
+    VideoPlayerComponent
   ],
   imports: [
     ReactiveFormsModule,

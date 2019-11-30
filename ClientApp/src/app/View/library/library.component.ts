@@ -6,6 +6,20 @@ import { tap } from 'rxjs/operators';
 @Component({
   selector: 'app-library',
   templateUrl: './library.component.html',
+  styles: [
+    `.rotate {
+        animation: spin 0.5s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+          transform: rotate(360deg);
+      }
+    }`
+  ]
 })
 export class LibraryComponent implements OnInit {
   searchTerm: string = "";
