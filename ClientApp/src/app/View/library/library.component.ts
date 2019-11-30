@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieFile, LibraryService } from 'src/app/Component/library/library.service';
 import { NotificationService } from 'src/app/Component/notifications/notification.service';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-library',
