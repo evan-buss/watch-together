@@ -7,7 +7,7 @@
         <!-- Top Panel Controls -->
         <div class="full flex flex-col sm:flex-row justify-between items-center px-4">
             <h1 class="text-3xl font-bold font-sans py-4">Movie Library</h1>
-            <div>
+            <div class="flex flex-row">
                 <i (click)="scanLibrary()" [ngClass]="loading && 'rotate'"
                     class="las la-sync rounded-full p-3 mr-4 bg-white hover:shadow-lg cursor-pointer"></i>
                 <input type="text" [(ngModel)]="searchTerm" class="appearance-none outline-none rounded p-2 w-full max-w-sm sm:w-64

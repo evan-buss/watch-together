@@ -1,9 +1,7 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError } from 'rxjs/operators';
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
-import { URLSearchParams } from 'url';
 
 @Injectable({
   providedIn: 'root'
