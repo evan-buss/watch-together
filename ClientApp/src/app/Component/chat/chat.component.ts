@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from './chat.service';
-import { tap } from "rxjs/operators";
 
 @Component({
   selector: 'app-chat',

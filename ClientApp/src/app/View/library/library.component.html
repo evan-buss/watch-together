@@ -5,8 +5,8 @@
 
     <div class="lg:w-10/12 mx-auto">
         <!-- Top Panel Controls -->
-        <div class="full flex flex-col sm:flex-row justify-between items-center px-4">
-            <h1 class="text-3xl font-bold font-sans py-4">Movie Library</h1>
+        <div class="full flex flex-col sm:flex-row justify-between items-center px-4 pb-2">
+            <h1 class="text-3xl font-bold font-sans py-3">Movie Library</h1>
             <div class="flex flex-row w-full max-w-sm">
                 <div (click)="scanLibrary()"
                     class="w-10 h-10 mr-2 flex items-center justify-center bg-white hover:shadow-lg cursor-pointer rounded">
@@ -20,7 +20,7 @@
             {{errorMessage}}
         </h1>
         <!-- List of movie cards based on the initial library request -->
-        <div class="flex flex-wrap justify-center items-center bg-gray-300">
+        <div class="flex flex-wrap justify-center items-center bg-gray-300 px-2 sm:px-0">
             <app-library-movie-card *ngFor="let movie of movies" [movie]="movie" (play)="handlePlay(movie)"
                 (edit)="handleEdit(movie)"></app-library-movie-card>
         </div>

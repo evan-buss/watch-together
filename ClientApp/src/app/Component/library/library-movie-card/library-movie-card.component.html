@@ -11,7 +11,7 @@ flex flex-row relative">
   <img (mouseenter)="isHover = true" src="{{movie.metadata.poster}}" alt="{{movie.metadata.title}} poster"
     class="w-5/12 rounded-lg rounded-r-none object-cover object-left-top" />
   <!-- Content Container -->
-  <div class="p-2 h-full flex flex-col justify-between">
+  <div class="p-2 h-full w-7/12 flex flex-col justify-between">
     <!-- Title and Summary Container -->
     <div>
       <a href="{{movie.metadata.url}}" target="_blank" rel="noopener"
@@ -23,9 +23,8 @@ flex flex-row relative">
     </div>
 
     <!-- Details -->
-    <div class="flex items-center justify-between items-baseline px-2">
+    <div class="absolute w-7/12 bottom-0 right-0 flex items-center justify-between items-baseline px-2 py-1">
       <div class="text-base text-gray-900 font-bold">{{movie.metadata.year}}</div>
-      <!--    on:click={() => dispatch('open')}-->
       <i (click)="edit.emit(null)" class="la la-cog p-1 hover:text-green-600 hover:shadow rounded-full
     cursor-pointer"></i>
       <span>
@@ -37,6 +36,8 @@ flex flex-row relative">
     </div>
   </div>
 </div>
+
+<!-- Blank Card Layout -->
 <ng-template #blankcard>
   <div (mouseleave)="isHover = false" class="w-full h-56 max-w-sm rounded-lg shadow-xl my-2 sm:mx-2 bg-gray-100
 flex flex-row relative">
@@ -70,6 +71,3 @@ font-mono flex justify-center items-center select-none">
     </div>
   </div>
 </ng-template>
-
-<!--{/if}-->
-<!--{/if}-->

@@ -1,11 +1,14 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 
 import { HostGuard } from './host.guard';
+import { UserService } from './user.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HostGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [HostGuard]
+      imports: [RouterTestingModule],
+      providers: [HostGuard, UserService]
     });
   });
 

@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NotificationsComponent } from './notifications.component';
+import { NotificationService } from './notification.service';
+import { DefaultNotificationComponent } from './default-notification/default-notification.component';
+import { MovieNotificationComponent } from './movie-notification/movie-notification.component';
 
 describe('NotificationsComponent', () => {
   let component: NotificationsComponent;
@@ -8,9 +11,10 @@ describe('NotificationsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationsComponent ]
+      declarations: [NotificationsComponent, DefaultNotificationComponent, MovieNotificationComponent],
+      providers: [NotificationService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

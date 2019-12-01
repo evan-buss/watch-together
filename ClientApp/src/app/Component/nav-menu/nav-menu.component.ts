@@ -6,6 +6,10 @@ import { ChatService } from '../chat/chat.service';
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
+  styles: [`.active {
+    background-color: white;
+    color: #4299e1;
+  }`]
 })
 export class NavMenuComponent {
   constructor(

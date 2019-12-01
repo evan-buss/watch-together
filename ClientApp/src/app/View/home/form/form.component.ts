@@ -7,7 +7,6 @@ import { NotificationService } from 'src/app/Component/notifications/notificatio
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styles: []
 })
 export class FormComponent implements OnInit {
 

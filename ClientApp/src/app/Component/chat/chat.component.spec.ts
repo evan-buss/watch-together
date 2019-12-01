@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChatComponent } from './chat.component';
+import { MessageComponent } from './message/message.component';
+import { FormsModule } from '@angular/forms';
+import { ChatService } from './chat.service';
+import * as signalR from "@microsoft/signalr";
 
 describe('ChatComponent', () => {
   let component: ChatComponent;
@@ -8,18 +12,21 @@ describe('ChatComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChatComponent ]
+      imports: [FormsModule],
+      declarations: [ChatComponent, MessageComponent],
+      providers: [ChatService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ChatComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
+    component.chatService.start();
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 });

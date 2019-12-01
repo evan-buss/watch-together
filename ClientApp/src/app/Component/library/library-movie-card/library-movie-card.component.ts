@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MovieFile} from "../library.service";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MovieFile } from "../library.service";
 
 @Component({
   selector: 'app-library-movie-card',
@@ -21,7 +21,9 @@ export class LibraryMovieCardComponent implements OnInit {
       .split("/")
       .pop();
     if (this.movie.metadata) {
-      this.movie.metadata.summary = this.movie.metadata.summary.substring(0, 150);
+      if (this.movie.metadata.summary.length > 130) {
+        this.movie.metadata.summary = this.movie.metadata.summary.substring(0, 130) + "...";
+      }
     }
   }
 }

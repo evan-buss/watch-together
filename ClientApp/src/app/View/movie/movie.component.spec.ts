@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MovieComponent } from './movie.component';
+import { ChatComponent } from 'src/app/Component/chat/chat.component';
+import { VideoPlayerComponent } from 'src/app/Component/video-player/video-player.component';
+import { MessageComponent } from 'src/app/Component/chat/message/message.component';
+import { FormsModule } from '@angular/forms';
 
 describe('MovieComponent', () => {
   let component: MovieComponent;
@@ -8,9 +12,10 @@ describe('MovieComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MovieComponent ]
+      imports: [FormsModule],
+      declarations: [MovieComponent, ChatComponent, VideoPlayerComponent, MessageComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

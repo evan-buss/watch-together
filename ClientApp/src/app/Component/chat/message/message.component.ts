@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ChatMessage } from '../chat.service';
 import { UserService } from 'src/app/Service/user.service';
 
@@ -6,16 +6,15 @@ import { UserService } from 'src/app/Service/user.service';
   selector: 'app-message',
   templateUrl: './message.component.html',
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent {
 
   // Did logged in user send it?
-  sentMessage: boolean;
-  @Input() message: ChatMessage;
+  sentMessage: boolean = false;
+  @Input() message: ChatMessage = null;
 
-  constructor(private userService: UserService) {
-  }
+  constructor(private userService: UserService) { }
 
-  ngOnInit() {
-    this.sentMessage = this.message.username === this.userService.user.username;
+  ngOnInit(): void {
+    this.sentMessage = this.message !== null && this.userService.user !== null && this.message.username === this.userService.user.username;
   }
 }

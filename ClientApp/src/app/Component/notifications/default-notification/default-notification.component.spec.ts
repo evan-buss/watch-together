@@ -8,18 +8,19 @@ describe('DefaultNotificationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DefaultNotificationComponent ]
+      declarations: [DefaultNotificationComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DefaultNotificationComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
+    component.notification = { title: "title", message: "message" };
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 });
