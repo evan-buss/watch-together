@@ -1,0 +1,18 @@
+Bugs:
+    ☐  An unhandled exception was thrown by the application.
+        System.InvalidOperationException: The SPA default page middleware could not return the default page '/index.html' because it was not found, and no other middleware handled the request.
+        - Not sure when this occurs, but it seems to only be in the production build
+    ☐ Scan button should stop loading indicator on error
+    ☐ Make library connection error message better
+    ☐ Chat sidebar expands once a long message is sent. It has a limit, but it should be at the limit immediately
+
+Design:
+    Figure out how clients are going to connect.
+    ☐ Remove the IP address field as the user's will need to direct connect.
+    ☐ The host should be given or set a password so that other users cannot control the media.
+    ☐ Think of a better way to play the movie. Current UX is kind wonky
+    
+Web Scraper / Metadata API:
+    ☐ Work on the rewrite of the web scraper in C#
+    ☐ Use a postgresql database instead of an SQLITE 3 database
+        - Do all the scraping locally, and then create a dump that will be uploaded.
