@@ -24,7 +24,7 @@ namespace watch_together
                     config.AddIniFile(configFile, optional: false, reloadOnChange: true);
                     config.AddInMemoryCollection(new Dictionary<string, string>{
                         {"config", Path.GetDirectoryName(configFile)},
-                        {"api", "http://localhost:8080/"}
+                        {"api", "http://localhost:1337/"}
                     });
                 }).UseStartup<Startup>();
 

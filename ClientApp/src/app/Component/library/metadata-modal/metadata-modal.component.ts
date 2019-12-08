@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, Input, OnDestroy } from '@angular/core';
-import { LibraryService, APIResult, MovieMetadata, MovieFile } from '../library.service';
+import { LibraryService, MovieMetadata, MovieFile } from '../library.service';
 
 @Component({
   selector: 'app-metadata-modal',
@@ -9,9 +9,12 @@ export class MetadataModalComponent implements OnInit, OnDestroy {
   @Input() selectedMovie: MovieFile;
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
   @Output() libraryUpdated: EventEmitter<MovieFile[]> = new EventEmitter<MovieFile[]>();
+
+  // Search Parameters
   title: string;
   year: string;
-  results: APIResult = null;
+
+  results: MovieMetadata[] = null;
   currentPage: number = 0;
   private errorString: string = "";
 
@@ -21,16 +24,22 @@ export class MetadataModalComponent implements OnInit, OnDestroy {
       return this.errorString;
     } else if (this.results === null) {
       return "Search a movie to update metadata";
-    } else if (this.results && this.results.total <= 0) {
+    } else if (this.results && this.results.length <= 0) {
       return "Search didn't return any results. Try again.";
     }
     return "";
   }
 
+  // Visible results provides a window that shows 10 results at a time. 
+  // Increase the page number to step through
+  get visibleResults(): MovieMetadata[] {
+    return this.results.slice(this.currentPage * 10, this.currentPage * 10 + 10 + 1);
+  }
+
   constructor(private libraryService: LibraryService) { }
 
   search(): void {
-    this.libraryService.searchQuery(this.title, this.year, this.currentPage)
+    this.libraryService.searchQuery(this.title, this.year)
       .subscribe(
         results => this.results = results,
         error => this.errorString = error
@@ -53,7 +62,6 @@ export class MetadataModalComponent implements OnInit, OnDestroy {
     } else {
       this.currentPage--;
     }
-    this.search();
   }
 
   ngOnInit() {

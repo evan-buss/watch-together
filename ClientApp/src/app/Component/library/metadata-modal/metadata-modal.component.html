@@ -48,11 +48,11 @@
       </div>
       <!-- Table Body -->
       <div class="w-full rounded border-2 border-gray-300 flex flex-col">
-        <app-metadata-item *ngFor="let movie of results.movies; index as i;" [movie]="movie" [alternate]="i % 2 === 0"
+        <app-metadata-item *ngFor="let movie of visibleResults; index as i;" [movie]="movie" [alternate]="i % 2 === 0"
           (update)="updateMetadata(movie)">
         </app-metadata-item>
       </div>
-      <app-pagination [total]="results.total" [perPage]="10" [currentPage]="currentPage"
+      <app-pagination [total]="results.length" [perPage]="10" [currentPage]="currentPage"
         (pageChange)="handlePageChange($event)"></app-pagination>
     </ng-template>
     <button *ngIf="selectedMovie.metadata !== null" (click)="clearMetadata()"

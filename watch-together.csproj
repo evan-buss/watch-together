@@ -53,4 +53,8 @@
     </ItemGroup>
   </Target>
 
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);MetaData\**</DefaultItemExcludes>
+  </PropertyGroup>
+
 </Project>

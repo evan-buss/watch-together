@@ -10,9 +10,16 @@ Design:
     Figure out how clients are going to connect.
     ☐ Remove the IP address field as the user's will need to direct connect.
     ☐ The host should be given or set a password so that other users cannot control the media.
-    ☐ Think of a better way to play the movie. Current UX is kind wonky
-    
+        ☐ Come up witha randomly generated word-pair password. The host enters this password to confirm their identity
+    ✔ Think of a better way to play the movie. Current UX is kind wonky @done(19-12-07 23:14)
+    ☐ Figure out a way to keep the variable length text from overflowing on movie cards...
 Web Scraper / Metadata API:
     ☐ Work on the rewrite of the web scraper in C#
-    ☐ Use a postgresql database instead of an SQLITE 3 database
+    ✔ Use a postgresql database instead of an SQLITE 3 database @done(19-12-07 23:15)
         - Do all the scraping locally, and then create a dump that will be uploaded.
+    ☐ Get the app back in working order
+        ✔ Metadata search doesn't work, we need to decide if we are using offset or just sending all results and letting frontend paginate manually; @done(19-12-07 23:05)
+        ✔ Decide how metadata API and scraper will be structured in git (need another repository) @done(19-12-07 23:22)
+        ☐ Figure out how the metadata api will be hosted. Fucking heroku with a 10k row limit...
+        ☐ Create single docker-compose script to run the database and the API
+        ☐ Create a specific docker "network" for the api and database to share... Might have to transfer existing data

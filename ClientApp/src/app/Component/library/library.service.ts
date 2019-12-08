@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class LibraryService {
 
-  metadataAPI = "http://localhost:8080/?";
+  metadataAPI = "http://localhost:1337/?";
   libraryUrl = "api/library";
   scanUrl = "api/library/scan";
 
@@ -22,7 +22,7 @@ export class LibraryService {
     return this.http.get<MovieFile[]>(this.scanUrl).pipe(catchError(this.handleError));
   }
 
-  searchQuery(title: string = "", year: string = "", offset: number = 0): Observable<APIResult> {
+  searchQuery(title: string = "", year: string = ""): Observable<MovieMetadata[]> {
     let params = new HttpParams();
 
     if (year === "" && title === "") {
@@ -35,13 +35,12 @@ export class LibraryService {
     if (year !== "") {
       params = params.append("year", year);
     }
-    params = params.append("offset", offset.toString());
 
     const query = params.toString();
 
     console.log(query);
 
-    return this.http.get<APIResult>(this.metadataAPI + query).pipe(catchError(this.handleError));
+    return this.http.get<MovieMetadata[]>(this.metadataAPI + query).pipe(catchError(this.handleError));
   }
 
   updateMovie(movie: MovieFile, metadata?: MovieMetadata): Observable<MovieFile[]> {
@@ -79,10 +78,10 @@ export interface MovieFile {
   metadata: MovieMetadata;
 }
 
-export interface APIResult {
-  total: number;
-  movies: MovieMetadata[];
-}
+// export interface APIResult {
+//   total: number;
+//   movies: MovieMetadata[];
+// }
 
 export interface MovieMetadata {
   id: number;

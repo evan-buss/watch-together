@@ -84,13 +84,13 @@ namespace watch_together.Streaming
                 var response = await Client.GetAsync(url);
 
                 // Retrieve the matching movies by converting from JSON to QueryData objects
-                var res = await response.Content.ReadAsAsync<QueryResponse>();
+                var res = await response.Content.ReadAsAsync<Metadata[]>();
 
                 // Make sure results were found...
-                if (res.Total != 0)
+                if (res.Length != 0)
                 {
                     // TODO: The API should be able to return a single file in the C# rewrite 
-                    movieFile.Metadata = res.Movies[0];
+                    movieFile.Metadata = res[0];
                 }
             }
             return movieFile;
@@ -129,14 +129,14 @@ namespace watch_together.Streaming
         public string Year;
     }
 
-    /// <summary>
-    /// QueryData is the object that is returned from querying the Metadata API
-    /// </summary>
-    internal class QueryResponse
-    {
-        public int Total { get; set; }
-        public Metadata[] Movies { get; set; }
-    }
+    // /// <summary>
+    // /// QueryData is the object that is returned from querying the Metadata API
+    // /// </summary>
+    // internal class QueryResponse
+    // {
+    //     public int Total { get; set; }
+    //     public Metadata[] Movies { get; set; }
+    // }
 
     public class Metadata
     {

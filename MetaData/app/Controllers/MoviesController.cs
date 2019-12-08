@@ -28,7 +28,7 @@ namespace MetaData.Controllers
             var results = _context.Movies.AsQueryable();
             if (title != null)
             {
-                results = _context.Movies.Where(movie => movie.Title.ToLower().Contains(title));
+                results = _context.Movies.Where(movie => movie.Title.ToLower().Contains(title.ToLower()));
             }
             else
             {
