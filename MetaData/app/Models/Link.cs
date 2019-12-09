@@ -8,7 +8,7 @@ namespace MetaData.Models
         public int ID { get; set; }
 
         [Column("url")]
-        public virtual Movie Movie { get; set; }
+        public Movie Movie { get; set; }
         [Column("link")]
         public string Url { get; set; }
     }

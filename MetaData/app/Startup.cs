@@ -24,8 +24,7 @@ namespace MetaData
             services.AddCors();
             services.AddControllers();
             services.AddDbContext<Context>(opt =>
-                opt.UseLazyLoadingProxies().
-                    UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
+                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
             );
         }
 

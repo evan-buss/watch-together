@@ -1,8 +1,24 @@
-# Use postgres/example user/password credentials
 version: '3.1'
 
-services:
+networks:
+  metadata_network:
+      driver: bridge
+  
+volumes:
+  db_volume:
 
+services:
+  # metadata_api:
+  #   image: metadata:latest
+  #   depends_on: 
+  #     - db
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "1337:1337"
+  #   networks:
+  #     - metadata_network
   db:
     image: postgres:11
     restart: always
@@ -13,4 +29,7 @@ services:
       POSTGRES_PASSWORD: 2842 
       POSTGRES_DB: 'movies'
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql 
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_volume:/var/lib/postgresql/data
+    networks:
+      - metadata_network
