@@ -1,0 +1,67 @@
+{
+    "child": {
+        "child1": {
+            "child1": {
+                "directory": "\/home\/evan\/Documents\/watch-together\/MetaData\/app",
+                "height": 683,
+                "profile": "28131067-3a13-4a10-9acf-0cfc31eaa12b",
+                "readOnly": false,
+                "synchronizedInput": true,
+                "type": "Terminal",
+                "uuid": "9bff5701-8967-4955-8cb6-4a5cb036e9c8",
+                "width": 1280
+            },
+            "child2": {
+                "directory": "\/home\/evan\/Documents\/watch-together",
+                "height": 683,
+                "profile": "28131067-3a13-4a10-9acf-0cfc31eaa12b",
+                "readOnly": false,
+                "synchronizedInput": true,
+                "type": "Terminal",
+                "uuid": "5386596e-3e87-489e-93ee-242fa755be1e",
+                "width": 1279
+            },
+            "orientation": 0,
+            "position": 50,
+            "ratio": 0.5,
+            "type": "Paned"
+        },
+        "child2": {
+            "child1": {
+                "directory": "\/home\/evan\/Documents\/watch-together\/MetaData",
+                "height": 682,
+                "profile": "28131067-3a13-4a10-9acf-0cfc31eaa12b",
+                "readOnly": false,
+                "synchronizedInput": true,
+                "type": "Terminal",
+                "uuid": "ac21afbe-0668-4967-92a6-4ce089fa74af",
+                "width": 1280
+            },
+            "child2": {
+                "directory": "\/home\/evan\/Documents\/watch-together\/ClientApp",
+                "height": 682,
+                "profile": "28131067-3a13-4a10-9acf-0cfc31eaa12b",
+                "readOnly": false,
+                "synchronizedInput": true,
+                "type": "Terminal",
+                "uuid": "96f38bfb-3e48-4ab6-9c4f-a3bcee0bc12d",
+                "width": 1279
+            },
+            "orientation": 0,
+            "position": 50,
+            "ratio": 0.5,
+            "type": "Paned"
+        },
+        "orientation": 1,
+        "position": 50,
+        "ratio": 0.5,
+        "type": "Paned"
+    },
+    "height": 1366,
+    "name": "Default",
+    "synchronizedInput": false,
+    "type": "Session",
+    "uuid": "03fe01da-9c5e-4aea-9eae-4a637edc01d7",
+    "version": "1.0",
+    "width": 2560
+}
