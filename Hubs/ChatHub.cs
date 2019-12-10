@@ -6,7 +6,6 @@ namespace watch_together.Hubs
 {
     public class ChatHub : Hub
     {
-
         public async Task SendMessage(ChatMessage chatMessage)
         {
             await Clients.All.SendAsync("broadcastMessage", chatMessage);

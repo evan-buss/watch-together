@@ -12,20 +12,15 @@
   </div>
 
   <!-- IP Address Entry -->
-  <div class="mb-6">
+  <div *ngIf="create" class="mb-6">
     <label class="block text-gray-500 text-sm mb-2" for="room_code">
-      Video Server Address
+      Host Password
     </label>
-    <input formControlName="serverAddress" class="appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-400
-         leading-tight focus:outline-none focus:shadow-outline" id="room_code" type="text"
-      placeholder="192.168.1.1:8080" />
-    <p *ngIf="(serverAddress.dirty || serverAddress.touched) && serverAddress.hasError('required')"
-      class="text-red-500 text-xs italic">
-      Server address required...
-    </p>
-    <p *ngIf="(serverAddress.dirty || serverAddress.touched) && serverAddress.hasError('invalidAddress')"
-      class="text-red-500 text-xs italic">
-      Invalid IP Address
+    <input formControlName="password" class="appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-400
+         leading-tight focus:outline-none focus:shadow-outline" id="room_code" type="password"
+      placeholder="Check console for password" />
+    <p *ngIf="(password.dirty || password.touched) && password.invalid" class="text-red-500 text-xs italic">
+      Password Required
     </p>
   </div>
 

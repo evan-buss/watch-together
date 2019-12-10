@@ -78,11 +78,6 @@ export interface MovieFile {
   metadata: MovieMetadata;
 }
 
-// export interface APIResult {
-//   total: number;
-//   movies: MovieMetadata[];
-// }
-
 export interface MovieMetadata {
   id: number;
   url: string;

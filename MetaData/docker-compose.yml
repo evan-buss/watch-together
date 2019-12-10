@@ -1,8 +1,8 @@
 version: '3.1'
 
-networks:
-  metadata_network:
-      driver: bridge
+# networks:
+#   metadata_network:
+#       driver: bridge
   
 volumes:
   db_volume:
@@ -23,7 +23,7 @@ services:
     image: postgres:11
     restart: always
     ports:
-      - '5432:5432'
+      - '5433:5432'
     environment:
       POSTGRES_USER: 'evan'
       POSTGRES_PASSWORD: 2842 
@@ -31,5 +31,5 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - db_volume:/var/lib/postgresql/data
-    networks:
-      - metadata_network
+    # networks:
+    #   - metadata_network

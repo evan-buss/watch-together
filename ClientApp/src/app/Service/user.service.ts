@@ -1,4 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Observable, of, throwError } from 'rxjs';
+import { first, catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { NotificationService } from '../Component/notifications/notification.service';
 
 
 /**
@@ -23,25 +27,48 @@ export class UserService {
     return this.user && this.user.type === UserType.Viewer;
   }
 
-  constructor() {
+  constructor(private http: HttpClient, private notifService: NotificationService) {
     if (localStorage.getItem('user') !== null) {
       this.user = JSON.parse(localStorage.getItem('user'));
     }
   }
 
-  setHost(username: string, server: string): void {
-    this.user = {
-      username: username,
-      address: server,
-      type: UserType.Host
-    }
+  setHost(username: string, password: string): void {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
     this.saveToStorage();
+    // TODO: Figure out how I can return from this observable HTTP request...
+    this.http.post<LoginResponse>('api/login', { password }, httpOptions)
+      .pipe(catchError(this.handleError))
+      .subscribe(response => {
+        this.user = {
+          username: username,
+          password: password,
+          type: UserType.Host
+        };
+      });
+    // this.notifService.addTemporary({ title: response.response, message: response.message });
+    // this.notifService.addTemporary({ title: "Error", message: "Some sort of error" });
+    // console.log(success);
   }
 
-  setViewer(username: string, server: string): void {
+  handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.log(error.error.message);
+    } else {
+      console.log(error.status);
+    }
+
+    return throwError(error)
+  }
+
+  setViewer(username: string): void {
     this.user = {
       username: username,
-      address: server,
       type: UserType.Viewer
     }
     this.saveToStorage();
@@ -65,6 +92,11 @@ export enum UserType {
 
 export interface UserDetails {
   username: string
-  address: string
+  password?: string
   type: UserType
+}
+
+export interface LoginResponse {
+  response: string
+  message: string
 }
